@@ -27,12 +27,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainApp() {
     AppTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = { RecipeTopAppBar()}
-        ) { innerPadding ->
-            MainBody(modifier = Modifier.padding(innerPadding))
-        }
+
     }
 }
 

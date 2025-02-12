@@ -124,7 +124,6 @@ private fun RecipeDetailsWithImage(
             ){
                 description()
             }
-
         }
 
         Image(
@@ -167,6 +166,5 @@ private fun AddRecipeWithImagePrev() {
     AppTheme {
         AddRecipeWithImage()
     }
-
 }
 

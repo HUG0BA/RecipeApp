@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipeapp.models.FilterChipModel
+import com.example.recipeapp.models.dummieChips
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
@@ -41,10 +42,7 @@ fun ChipFilterMenu(modifier: Modifier = Modifier, chips: List<FilterChipModel>) 
     }
 }
 
-val dummieChips = listOf(
-    FilterChipModel(name = "Favorita"),
-    FilterChipModel(name = "Tiempo de preparacion")
-)
+
 
 @Preview
 @Composable

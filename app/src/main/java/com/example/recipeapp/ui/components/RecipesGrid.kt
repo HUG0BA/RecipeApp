@@ -2,16 +2,12 @@ package com.example.recipeapp.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
@@ -31,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.R
 import com.example.recipeapp.models.RecipeOutlineModel
+import com.example.recipeapp.models.recipeOutlineDummies
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
@@ -93,19 +90,13 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutli
 }
 
 
-val recipesDummies = listOf(
-    RecipeOutlineModel("","Heart Pizza", 25, true),
-    RecipeOutlineModel("","Sweet Pizza", 15, false),
-    RecipeOutlineModel("","Sad Pizza", 35, false),
-    RecipeOutlineModel("","Funny Pizza", 95, true),
-    RecipeOutlineModel("","Crispy Pizza", 75, true)
-)
+
 
 @Preview
 @Composable
 private fun RecipeOutlinePrev() {
     AppTheme {
-        RecipeOutline(recipeOutlineModel =  recipesDummies[0])
+        RecipeOutline(recipeOutlineModel =  recipeOutlineDummies[0])
     }
 
 }
@@ -115,7 +106,7 @@ private fun RecipeOutlinePrev() {
 private fun RecipesGridPrev() {
     AppTheme {
 
-        RecipesGrid(recipes = recipesDummies)
+        RecipesGrid(recipes = recipeOutlineDummies)
 
     }
 }

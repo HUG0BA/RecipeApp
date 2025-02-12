@@ -11,3 +11,8 @@ class FilterChipModel(val name: String) {
         isSelected = !isSelected
     }
 }
+
+val dummieChips = listOf(
+    FilterChipModel(name = "Favorita"),
+    FilterChipModel(name = "Tiempo de preparacion")
+)

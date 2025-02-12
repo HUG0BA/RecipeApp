@@ -12,12 +12,15 @@ import com.example.recipeapp.models.dummieChips
 import com.example.recipeapp.models.recipeOutlineDummies
 
 @Composable
-fun MainBody(modifier: Modifier = Modifier) {
+fun MainBody(modifier: Modifier = Modifier, onCardClick: () -> Unit) {
     Column(modifier = modifier) {
         ChipFilterMenu(chips = dummieChips)
         Spacer(modifier = Modifier.size(10.dp))
         Box(modifier = Modifier.fillMaxSize()){
-            RecipesGrid(recipes = recipeOutlineDummies)
+            RecipesGrid(
+                recipes = recipeOutlineDummies,
+                onCardClick = onCardClick
+            )
         }
     }
 }

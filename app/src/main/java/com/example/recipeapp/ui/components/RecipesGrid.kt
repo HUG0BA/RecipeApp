@@ -31,20 +31,24 @@ import com.example.recipeapp.models.recipeOutlineDummies
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
-fun RecipesGrid(modifier: Modifier = Modifier,recipes: List<RecipeOutlineModel>) {
+fun RecipesGrid(modifier: Modifier = Modifier,recipes: List<RecipeOutlineModel>, onCardClick: () -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         items(items = recipes){
-            RecipeOutline(recipeOutlineModel = it)
+            RecipeOutline(
+                recipeOutlineModel = it,
+                onClick = onCardClick
+            )
         }
     }
 }
 
 @Composable
-fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutlineModel) {
+fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutlineModel, onClick: () -> Unit) {
     ElevatedCard(
+        onClick = onClick,
         modifier = modifier.wrapContentSize()
     ) {
         Column(
@@ -90,13 +94,14 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutli
 }
 
 
-
-
 @Preview
 @Composable
 private fun RecipeOutlinePrev() {
     AppTheme {
-        RecipeOutline(recipeOutlineModel =  recipeOutlineDummies[0])
+        RecipeOutline(
+            recipeOutlineModel =  recipeOutlineDummies[0],
+            onClick = {}
+        )
     }
 
 }
@@ -105,8 +110,9 @@ private fun RecipeOutlinePrev() {
 @Composable
 private fun RecipesGridPrev() {
     AppTheme {
-
-        RecipesGrid(recipes = recipeOutlineDummies)
-
+        RecipesGrid(
+            recipes = recipeOutlineDummies,
+            onCardClick = {}
+        )
     }
 }

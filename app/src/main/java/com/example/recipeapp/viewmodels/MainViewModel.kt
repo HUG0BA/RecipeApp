@@ -38,7 +38,7 @@ class MainViewModel(
             recipes = recipes,
             filter = filter
         )
-    }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MainScreenState())
 
     fun onEvent(event: MainScreenEvent){
         when(event) {

@@ -5,11 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    foreignKeys = [ForeignKey(
-        entity = UserEntity::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("userId")
-    )]
+
 )
 data class RecipeEntity(
     val userId: Int,
@@ -19,5 +15,14 @@ data class RecipeEntity(
     val isFavorite: Boolean,
     val image: String,
     @PrimaryKey(autoGenerate = true)
-    val id: Int
+    val id: Int = 0
 )
+
+/*
+
+foreignKeys = [ForeignKey(
+        entity = UserEntity::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("userId")
+    )]
+ */

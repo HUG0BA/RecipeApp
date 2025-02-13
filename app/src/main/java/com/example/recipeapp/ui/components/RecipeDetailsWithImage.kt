@@ -28,11 +28,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.R
+import com.example.recipeapp.events.AddRecipeScreenEvent
 import com.example.recipeapp.models.RecipeDetailModel
 import com.example.recipeapp.models.recipeDetailDummy
+import com.example.recipeapp.room.RecipeEntity
+import com.example.recipeapp.state.AddRecipeState
 import com.example.recipeapp.ui.theme.AppTheme
 
 val horizontalTextPadding = 45.dp
@@ -40,50 +44,63 @@ val horizontalTextPadding = 45.dp
 @Composable
 fun RecipeDetailsWithImage(
     modifier: Modifier = Modifier,
-    recipeDetailModel: RecipeDetailModel
+    recipeEntity: RecipeEntity
 ) {
     RecipeDetailsWithImage(
         modifier = modifier,
         header = {
             Text(
-                text = recipeDetailModel.title,
+                text = recipeEntity.title,
                 fontStyle = MaterialTheme.typography.displayLarge.fontStyle,
                 fontSize = MaterialTheme.typography.displayLarge.fontSize
             )
         },
+        preparationTime = {
+            Text(
+                text = recipeEntity.preparationTime.toString(),
+                fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
+                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                fontWeight = FontWeight.SemiBold
+            )
+        },
         description = {
             Text(
-                text = recipeDetailModel.description,
+                text = recipeEntity.description,
                 fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize
             )
         },
-        isFavorite = recipeDetailModel.isFavorite
+        isFavorite = recipeEntity.isFavorite
     )
 }
 
 @Composable
-fun AddRecipeWithImage(modifier: Modifier = Modifier) {
-    var title by remember { mutableStateOf("HIHIHIH") }
-    var description by remember { mutableStateOf("JJ") }
+fun AddRecipeWithImage(modifier: Modifier = Modifier, addRecipeState: AddRecipeState, onEvent: (AddRecipeScreenEvent) -> Unit) {
 
     RecipeDetailsWithImage(
         modifier = modifier,
         header = {
             BasicTextField(
-                value = title,
-                onValueChange = { title = it },
+                value = addRecipeState.title,
+                onValueChange = { onEvent(AddRecipeScreenEvent.SetTitle(it.trim())) },
                 textStyle = MaterialTheme.typography.displayLarge
+            )
+        },
+        preparationTime = {
+            BasicTextField(
+                value = addRecipeState.preparationTime.toString(),
+                onValueChange = { onEvent(AddRecipeScreenEvent.SetPreparationTime(it.trim().toInt())) },
+                textStyle = MaterialTheme.typography.bodyMedium
             )
         },
         description = {
             BasicTextField(
-                value = description,
-                onValueChange = { description = it },
+                value = addRecipeState.description,
+                onValueChange = { onEvent(AddRecipeScreenEvent.SetDescription(it.trim())) },
                 textStyle = MaterialTheme.typography.bodyMedium
             )
         },
-        isFavorite = false
+        isFavorite = addRecipeState.isFavorite
     )
 }
 
@@ -91,6 +108,7 @@ fun AddRecipeWithImage(modifier: Modifier = Modifier) {
 private fun RecipeDetailsWithImage(
     modifier: Modifier = Modifier,
     header: @Composable () -> Unit,
+    preparationTime: @Composable () -> Unit,
     description: @Composable () -> Unit,
     isFavorite: Boolean
 ) {
@@ -122,6 +140,8 @@ private fun RecipeDetailsWithImage(
                     .weight(.45f)
                     .padding(horizontal = horizontalTextPadding)
             ){
+                preparationTime()
+                Spacer(modifier = Modifier.size(5.dp))
                 description()
             }
         }
@@ -154,7 +174,7 @@ private fun RecipeDetailsPrev() {
     AppTheme {
         Box(modifier = Modifier.fillMaxSize()){
             RecipeDetailsWithImage(
-                recipeDetailModel = recipeDetailDummy
+                recipeEntity = RecipeEntity(1,"", "", 0, false, "")
             )
         }
     }
@@ -164,7 +184,10 @@ private fun RecipeDetailsPrev() {
 @Composable
 private fun AddRecipeWithImagePrev() {
     AppTheme {
-        AddRecipeWithImage()
+        AddRecipeWithImage(
+            addRecipeState = AddRecipeState(),
+            onEvent = {}
+        )
     }
 }
 

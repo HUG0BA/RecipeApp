@@ -26,27 +26,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.R
+import com.example.recipeapp.events.MainScreenEvent
 import com.example.recipeapp.models.RecipeOutlineModel
 import com.example.recipeapp.models.recipeOutlineDummies
+import com.example.recipeapp.room.RecipeEntity
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
-fun RecipesGrid(modifier: Modifier = Modifier,recipes: List<RecipeOutlineModel>, onCardClick: () -> Unit) {
+fun RecipesGrid(modifier: Modifier = Modifier, recipes: List<RecipeEntity>, onCardClick: (MainScreenEvent) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         items(items = recipes){
             RecipeOutline(
-                recipeOutlineModel = it,
-                onClick = onCardClick
+                recipeEntity = it,
+                onClick = { onCardClick(MainScreenEvent.SeeRecipeDetails(it.id)) }
             )
         }
     }
 }
 
 @Composable
-fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutlineModel, onClick: () -> Unit) {
+fun RecipeOutline(modifier: Modifier = Modifier, recipeEntity: RecipeEntity, onClick: () -> Unit) {
     ElevatedCard(
         onClick = onClick,
         modifier = modifier.wrapContentSize()
@@ -56,7 +58,7 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutli
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            if(recipeOutlineModel.isFavorite){
+            if(recipeEntity.isFavorite){
                 Icon(
                     modifier = Modifier.size(16.dp).align(Alignment.End),
                     imageVector = Icons.Filled.Star,
@@ -79,13 +81,13 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutli
             Spacer(modifier = Modifier.size(10.dp))
 
             Text(
-                text = recipeOutlineModel.title,
+                text = recipeEntity.title,
                 fontStyle = MaterialTheme.typography.bodyLarge.fontStyle,
                 fontSize = MaterialTheme.typography.bodyLarge.fontSize
             )
 
             Text(
-                text = recipeOutlineModel.preparationTime.toString(),
+                text = recipeEntity.preparationTime.toString(),
                 fontStyle = MaterialTheme.typography.bodySmall.fontStyle,
                 fontSize = MaterialTheme.typography.bodySmall.fontSize
             )
@@ -99,7 +101,7 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeOutlineModel: RecipeOutli
 private fun RecipeOutlinePrev() {
     AppTheme {
         RecipeOutline(
-            recipeOutlineModel =  recipeOutlineDummies[0],
+            recipeEntity = RecipeEntity(0, "", "", 0, false, ""),
             onClick = {}
         )
     }
@@ -111,7 +113,7 @@ private fun RecipeOutlinePrev() {
 private fun RecipesGridPrev() {
     AppTheme {
         RecipesGrid(
-            recipes = recipeOutlineDummies,
+            recipes = emptyList(),
             onCardClick = {}
         )
     }

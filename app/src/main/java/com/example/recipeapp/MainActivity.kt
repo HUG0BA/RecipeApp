@@ -4,37 +4,65 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.recipeapp.navigation.MainNavigation
-import com.example.recipeapp.ui.components.MainBody
-import com.example.recipeapp.ui.components.RecipeTopAppBar
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.example.recipeapp.navigation.DefaultNavigator
+import com.example.recipeapp.navigation.Destination
+import com.example.recipeapp.navigation.NavigationAction
 import com.example.recipeapp.ui.theme.AppTheme
+import com.example.recipeapp.utility.ObserveAsEvents
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val navigator = DefaultNavigator(startDestination = Destination.MainScreen)
+
         setContent {
-            MainApp()
+            AppTheme {
+                val navController = rememberNavController()
+
+                ObserveAsEvents(flow = navigator.navigateActions) { action ->
+                    when (action) {
+                        is NavigationAction.Navigate -> navController.navigate(
+                            action.destination
+                        ){
+                            action.navOptions(this)
+                        }
+                        NavigationAction.NavigateUp -> navController.navigateUp()
+                    }
+                }
+
+                NavHost(
+                    navController = navController,
+                    startDestination = navigator.startDestination
+                ) {
+                    composable<Destination.MainScreen> {
+
+                    }
+
+                    composable<Destination.RecipeDetailsScreen> {
+                        val args = it.toRoute<Destination.RecipeDetailsScreen>()
+                    }
+
+                    composable<Destination.AddRecipeScreen> {
+
+                    }
+                }
+            }
         }
     }
 }
 
-@Composable
-fun MainApp() {
-    AppTheme {
-        MainNavigation()
-    }
-}
+
 
 
 @Preview
 @Composable
 private fun MainPrev() {
-    MainApp()
+
 }

@@ -11,6 +11,8 @@ import com.example.recipeapp.ui.screens.MainScreen
 import com.example.recipeapp.ui.screens.RecipeDetailsScreen
 import com.example.recipeapp.ui.theme.AppTheme
 
+
+/*
 @Composable
 fun MainNavigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
@@ -40,4 +42,4 @@ private fun MainNavigationPrev() {
     AppTheme {
         MainNavigation()
     }
-}
+}*/

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.devtools.ksp") version "2.1.0-1.0.29"
+
 }
 
 android {
@@ -57,11 +58,14 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
-
     //Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.compiler)
     ksp(libs.androidx.room.compiler)
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    //noinspection UseTomlInstead
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 
 
     testImplementation(libs.junit)

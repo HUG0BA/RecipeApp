@@ -8,13 +8,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.recipeapp.models.Filters
 import com.example.recipeapp.models.dummieChips
 import com.example.recipeapp.models.recipeOutlineDummies
 
 @Composable
 fun MainBody(modifier: Modifier = Modifier, onCardClick: () -> Unit) {
     Column(modifier = modifier) {
-        ChipFilterMenu(chips = dummieChips)
+        ChipFilterMenu(selectedFilter = Filters.NONE, onEvent = {})
         Spacer(modifier = Modifier.size(10.dp))
         Box(modifier = Modifier.fillMaxSize()){
             RecipesGrid(

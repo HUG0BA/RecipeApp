@@ -14,29 +14,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.recipeapp.events.MainScreenEvent
 import com.example.recipeapp.models.FilterChipModel
+import com.example.recipeapp.models.Filters
 import com.example.recipeapp.models.dummieChips
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
-fun ChipFilterMenu(modifier: Modifier = Modifier, chips: List<FilterChipModel>) {
+fun ChipFilterMenu(modifier: Modifier = Modifier, selectedFilter: Filters, onEvent: (MainScreenEvent) -> Unit) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        chips.forEach {
+        Filters.entries.drop(1).forEach {
             it -> FilterChip(
-                selected = it.isSelected,
-                onClick = { it.onClick() },
+                selected = selectedFilter == it,
+                onClick = { onEvent(MainScreenEvent.SelectFilter(it)) },
                 label = {
                     Text(
-                        text = it.name,
+                        text = it.description,
                         fontStyle = MaterialTheme.typography.labelMedium.fontStyle,
                         fontSize = MaterialTheme.typography.labelMedium.fontSize
-                    )
-                }
+                    ) }
             )
         }
     }
@@ -48,6 +49,9 @@ fun ChipFilterMenu(modifier: Modifier = Modifier, chips: List<FilterChipModel>) 
 @Composable
 private fun ChipFilterMenuPrev() {
     AppTheme() {
-        ChipFilterMenu(chips = dummieChips)
+        ChipFilterMenu(
+            selectedFilter = Filters.PREPARATION_TIME_DESCENDING,
+            onEvent = {}
+        )
     }
 }

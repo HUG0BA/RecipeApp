@@ -14,6 +14,9 @@ interface RecipesDao {
     @Delete
     suspend fun deleteRecipe(recipe: RecipeEntity)
 
+    @Query("SELECT * FROM RECIPEENTITY")
+    fun getAllRecipes(): Flow<List<RecipeEntity>>
+
     @Query("SELECT * FROM RecipeEntity ORDER BY preparationTime DESC")
     fun getRecipesOrderedByPrepTimeDesc(): Flow<List<RecipeEntity>>
 

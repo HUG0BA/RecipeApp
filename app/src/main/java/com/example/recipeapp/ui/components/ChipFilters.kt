@@ -15,9 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipeapp.events.MainScreenEvent
-import com.example.recipeapp.models.FilterChipModel
 import com.example.recipeapp.models.Filters
-import com.example.recipeapp.models.dummieChips
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable

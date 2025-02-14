@@ -10,18 +10,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.events.MainScreenEvent
 import com.example.recipeapp.models.Filters
-import com.example.recipeapp.models.dummieChips
-import com.example.recipeapp.models.recipeOutlineDummies
 import com.example.recipeapp.room.RecipeEntity
+import com.example.recipeapp.state.MainScreenState
 
 @Composable
-fun MainBody(modifier: Modifier = Modifier, recipes: List<RecipeEntity>, onEvent: (MainScreenEvent) -> Unit) {
+fun MainBody(modifier: Modifier = Modifier, mainScreenState: MainScreenState, onEvent: (MainScreenEvent) -> Unit) {
     Column(modifier = modifier) {
-        ChipFilterMenu(selectedFilter = Filters.NONE, onEvent = {})
+        ChipFilterMenu(selectedFilter = mainScreenState.filter, onEvent = onEvent)
         Spacer(modifier = Modifier.size(10.dp))
         Box(modifier = Modifier.fillMaxSize()){
             RecipesGrid(
-                recipes = recipes,
+                recipes = mainScreenState.recipes,
                 onCardClick = onEvent
             )
         }

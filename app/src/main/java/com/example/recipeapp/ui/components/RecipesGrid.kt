@@ -27,8 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.R
 import com.example.recipeapp.events.MainScreenEvent
-import com.example.recipeapp.models.RecipeOutlineModel
-import com.example.recipeapp.models.recipeOutlineDummies
 import com.example.recipeapp.room.RecipeEntity
 import com.example.recipeapp.ui.theme.AppTheme
 
@@ -101,7 +99,7 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeEntity: RecipeEntity, onC
 private fun RecipeOutlinePrev() {
     AppTheme {
         RecipeOutline(
-            recipeEntity = RecipeEntity(0, "", "", 0, false, ""),
+            recipeEntity = RecipeEntity(0, "", "", 0, false),
             onClick = {}
         )
     }

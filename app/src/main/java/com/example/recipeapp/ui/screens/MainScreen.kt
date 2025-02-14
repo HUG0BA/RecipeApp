@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipeapp.events.MainScreenEvent
+import com.example.recipeapp.room.recipeDummies
 import com.example.recipeapp.state.MainScreenState
 import com.example.recipeapp.ui.components.MainBody
 import com.example.recipeapp.ui.components.RecipeTopAppBar
@@ -30,7 +31,7 @@ fun MainScreen(mainScreenState: MainScreenState, onEvent: (MainScreenEvent) -> U
         MainBody(
             modifier = Modifier.padding(innerPadding),
             onEvent = onEvent,
-            recipes = mainScreenState.recipes
+            mainScreenState = mainScreenState
         )
     }
 }
@@ -40,7 +41,7 @@ fun MainScreen(mainScreenState: MainScreenState, onEvent: (MainScreenEvent) -> U
 private fun MainScreenPrev() {
     AppTheme {
         MainScreen(
-            mainScreenState = MainScreenState(),
+            mainScreenState = MainScreenState(recipes = recipeDummies),
             onEvent = {}
         )
     }

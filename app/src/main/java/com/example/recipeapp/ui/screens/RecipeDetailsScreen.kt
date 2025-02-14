@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.recipeapp.models.recipeDetailDummy
+import com.example.recipeapp.events.RecipeDetailsEvent
+import com.example.recipeapp.room.RecipeEntity
+import com.example.recipeapp.room.recipeDummy
 import com.example.recipeapp.ui.components.RecipeDetailsWithImage
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
-fun RecipeDetailsScreen(modifier: Modifier = Modifier) {
+fun RecipeDetailsScreen(modifier: Modifier = Modifier, recipe: RecipeEntity, onEvent: (RecipeDetailsEvent) -> Unit) {
     RecipeDetailsWithImage(
-        recipeDetailModel = recipeDetailDummy
+        recipe = recipe,
+        onEvent = onEvent
     )
 }
 
@@ -20,6 +23,9 @@ fun RecipeDetailsScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun RecipeDetailsScreenPrev() {
     AppTheme {
-        RecipeDetailsScreen()
+        RecipeDetailsScreen(
+            recipe = recipeDummy,
+            onEvent = {}
+        )
     }
 }

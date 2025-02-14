@@ -1,5 +1,8 @@
 package com.example.recipeapp.viewmodels
 
+import android.content.Context
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.events.AddRecipeScreenEvent
@@ -7,12 +10,15 @@ import com.example.recipeapp.room.RecipeEntity
 import com.example.recipeapp.room.RecipesDao
 import com.example.recipeapp.state.AddRecipeState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AddRecipeViewModel(
     val recipesDao: RecipesDao
 ): ViewModel() {
-    val _state = MutableStateFlow(AddRecipeState())
+    private val _state = MutableStateFlow(AddRecipeState())
+    val state = _state.asStateFlow()
 
     fun onEvent(event: AddRecipeScreenEvent){
         when(event){
@@ -30,13 +36,17 @@ class AddRecipeViewModel(
                     return
                 }
 
+                if(image != null){
+
+                }
+
                 val recipe = RecipeEntity(
                     userId = 0,
                     title = title,
                     description =  description,
                     preparationTime =  preparationTime,
                     isFavorite =  isFavorite,
-                    image = image
+                    image = image?.toString()
                 )
 
                 viewModelScope.launch {
@@ -44,19 +54,37 @@ class AddRecipeViewModel(
                 }
             }
             is AddRecipeScreenEvent.SetDescription -> {
-                _state.value.description = event.description
+                _state.update {
+                    it.copy(
+                        description = event.description
+                    )
+                }
             }
-            is AddRecipeScreenEvent.SetFavorite -> {
-                _state.value.isFavorite = !_state.value.isFavorite
+            is AddRecipeScreenEvent.IsFavorite -> {
+                _state.update {
+                    it.copy(
+                        isFavorite = !_state.value.isFavorite
+                    )
+                }
             }
             is AddRecipeScreenEvent.SetImage -> {
-                _state.value.image = event.image
+                _state.update {
+                    it.copy(
+                        image = event.image
+                    )
+                }
             }
             is AddRecipeScreenEvent.SetPreparationTime -> {
-                _state.value.preparationTime = event.preparationTime
+                _state.update {
+                    it.copy(
+                        preparationTime = event.preparationTime
+                    )
+                }
             }
             is AddRecipeScreenEvent.SetTitle -> {
-                _state.value.title = event.title
+                _state.update {
+                    it.copy(title = event.title)
+                }
             }
         }
     }

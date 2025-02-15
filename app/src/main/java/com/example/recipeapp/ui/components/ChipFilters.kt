@@ -26,7 +26,7 @@ fun ChipFilterMenu(modifier: Modifier = Modifier, selectedFilter: Filters, onEve
             .horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        Filters.entries.drop(1).forEach {
+        Filters.entries.forEach {
             it -> FilterChip(
                 selected = selectedFilter == it,
                 onClick = { onEvent(MainScreenEvent.SelectFilter(it)) },

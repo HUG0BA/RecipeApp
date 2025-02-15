@@ -4,9 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -29,6 +32,7 @@ import coil3.compose.AsyncImage
 import com.example.recipeapp.R
 import com.example.recipeapp.events.MainScreenEvent
 import com.example.recipeapp.room.RecipeEntity
+import com.example.recipeapp.room.recipeDummies
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
@@ -50,7 +54,7 @@ fun RecipesGrid(modifier: Modifier = Modifier, recipes: List<RecipeEntity>, onCa
 fun RecipeOutline(modifier: Modifier = Modifier, recipeEntity: RecipeEntity, onClick: () -> Unit) {
     ElevatedCard(
         onClick = onClick,
-        modifier = modifier.wrapContentSize()
+        modifier = modifier.wrapContentWidth()
     ) {
         Column(
             modifier = Modifier.padding(10.dp),
@@ -91,7 +95,7 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeEntity: RecipeEntity, onC
             Text(
                 text = recipeEntity.title,
                 fontStyle = MaterialTheme.typography.bodyLarge.fontStyle,
-                fontSize = MaterialTheme.typography.bodyLarge.fontSize
+                fontSize = MaterialTheme.typography.bodySmall.fontSize
             )
 
             Text(
@@ -121,7 +125,7 @@ private fun RecipeOutlinePrev() {
 private fun RecipesGridPrev() {
     AppTheme {
         RecipesGrid(
-            recipes = emptyList(),
+            recipes = recipeDummies,
             onCardClick = {}
         )
     }

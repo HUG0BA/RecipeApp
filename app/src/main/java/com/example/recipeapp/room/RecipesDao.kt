@@ -21,8 +21,8 @@ interface RecipesDao {
     @Query("SELECT * FROM RecipeEntity WHERE id = :id")
     fun getRecipeById(id: Int): Flow<RecipeEntity>
 
-    @Query("SELECT * FROM RecipeEntity")
-    fun getAllRecipes(): Flow<List<RecipeEntity>>
+    @Query("SELECT * FROM RecipeEntity ORDER BY title")
+    fun getAllRecipesAlphabetical(): Flow<List<RecipeEntity>>
 
     @Query("SELECT * FROM RecipeEntity ORDER BY preparationTime ASC")
     fun getRecipesOrderedByPrepTimeDesc(): Flow<List<RecipeEntity>>

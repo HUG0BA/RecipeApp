@@ -5,5 +5,5 @@ import com.example.recipeapp.room.RecipeEntity
 
 data class MainScreenState(
     val recipes: List<RecipeEntity> = emptyList(),
-    val filter: Filters = Filters.NONE
+    val filter: Filters = Filters.ALPHABETIC
 )

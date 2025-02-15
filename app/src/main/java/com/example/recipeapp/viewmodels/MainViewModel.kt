@@ -21,12 +21,12 @@ class MainViewModel(
     recipesDao: RecipesDao,
     private val navigator: Navigator
 ) : ViewModel(){
-    private val _filter = MutableStateFlow(Filters.NONE)
+    private val _filter = MutableStateFlow(Filters.ALPHABETIC)
 
     private val _recipes = _filter
         .flatMapLatest {  filer ->
             when(filer){
-                Filters.NONE -> recipesDao.getAllRecipes()
+                Filters.ALPHABETIC -> recipesDao.getAllRecipesAlphabetical()
                 Filters.FAVORITE -> recipesDao.getFavoriteRecipes()
                 Filters.PREPARATION_TIME_DESCENDING -> recipesDao.getRecipesOrderedByPrepTimeDesc()
             }

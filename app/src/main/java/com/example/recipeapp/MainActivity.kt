@@ -40,6 +40,7 @@ import com.example.recipeapp.navigation.DefaultNavigator
 import com.example.recipeapp.navigation.Destination
 import com.example.recipeapp.navigation.NavigationAction
 import com.example.recipeapp.room.AppDatabase
+import com.example.recipeapp.room.UserEntity
 import com.example.recipeapp.state.AddRecipeState
 import com.example.recipeapp.ui.screens.AddRecipeScreen
 import com.example.recipeapp.ui.screens.LoginScreen
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
             "recipesv1.db"
         ).build()
     }
+
 
     val navigator = DefaultNavigator(startDestination = Destination.SplashScreen)
 
@@ -155,6 +157,7 @@ class MainActivity : ComponentActivity() {
 
                 LaunchedEffect(Unit) {
                     scope.launch {
+                        db.userDao.insertUser(UserEntity("Koalit", "info@koalit.dev", "koalit123"))
                         val preferences = loginPreferencesRepository.fetchInitialPreferences()
                         delay(750)
                         if(preferences.isLogged){

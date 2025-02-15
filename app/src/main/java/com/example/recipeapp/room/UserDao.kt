@@ -2,12 +2,13 @@ package com.example.recipeapp.room
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertUser(user: UserEntity)
 
     @Query("SELECT * FROM UserEntity WHERE email = :email AND password = :password")

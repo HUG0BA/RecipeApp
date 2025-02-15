@@ -10,8 +10,8 @@ interface UserDao {
     @Insert
     suspend fun insertUser(user: UserEntity)
 
-    @Query("SELECT * FROM USERENTITY WHERE email = :email AND password = :password")
-    fun getLoginUser(email: String, password: String): UserEntity?
+    @Query("SELECT * FROM UserEntity WHERE email = :email AND password = :password")
+    suspend fun getLoginUser(email: String, password: String): UserEntity?
 
     @Query("SELECT * FROM UserEntity WHERE id = :userId")
     fun getUserById(userId: Int): Flow<UserEntity>

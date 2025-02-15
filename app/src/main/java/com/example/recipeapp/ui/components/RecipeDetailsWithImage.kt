@@ -11,7 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
@@ -48,7 +51,8 @@ fun RecipeDetailsWithImage(
         contentAlignment = Alignment.Center
     ){
         Column(
-            modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             Surface(
                 modifier = Modifier
@@ -71,20 +75,27 @@ fun RecipeDetailsWithImage(
                     .weight(.45f)
                     .padding(horizontal = horizontalTextPadding)
             ){
-                Column {
-                    Text(
-                        text = "Tiempo de preparacion: ${recipe.preparationTime} minutos",
-                        fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Spacer(modifier = Modifier.size(16.dp))
+                LazyColumn {
+                    item{
+                        Text(
+                            text = "Tiempo de preparacion: ${recipe.preparationTime} minutos",
+                            fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
 
-                    Text(
-                        text = recipe.description,
-                        fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
-                    )
+                    item{
+                        Spacer(modifier = Modifier.size(16.dp))
+                    }
+
+                    item{
+                        Text(
+                            text = recipe.description,
+                            fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        )
+                    }
                 }
             }
         }
@@ -110,7 +121,6 @@ fun RecipeDetailsWithImage(
             )
         }
 
-
         IconButton(
             modifier = Modifier
                 .offset(x = maxWidth * .35f, y = -maxHeight * 0.25f),
@@ -125,7 +135,6 @@ fun RecipeDetailsWithImage(
                 tint = if(recipe.isFavorite)  MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onPrimary
             )
         }
-
     }
 }
 

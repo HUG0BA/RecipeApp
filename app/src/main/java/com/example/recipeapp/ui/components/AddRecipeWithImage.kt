@@ -17,9 +17,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
@@ -71,7 +74,8 @@ fun AddRecipeWithImage(
         contentAlignment = Alignment.Center
     ){
         Column(
-            modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             Surface(
                 modifier = Modifier
@@ -94,32 +98,40 @@ fun AddRecipeWithImage(
                     .weight(.45f)
                     .padding(horizontal = horizontalTextPadding)
             ){
-                Column {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Text(
-                            text = "Tiempo de preparacion: ",
-                            fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
-                        )
+                LazyColumn {
+
+                    item{
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "Tiempo de preparacion: ",
+                                fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                            )
+                            BasicTextField(
+                                value = addRecipeState.preparationTime.toString(),
+                                onValueChange = { onEvent(AddRecipeScreenEvent.SetPreparationTime(it.toInt())) },
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Number
+                                ),
+                                textStyle = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.size(16.dp))
+                    }
+
+                    item{
                         BasicTextField(
-                            value = addRecipeState.preparationTime.toString(),
-                            onValueChange = { onEvent(AddRecipeScreenEvent.SetPreparationTime(it.toInt())) },
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Number
-                            ),
+                            value = addRecipeState.description,
+                            onValueChange = { onEvent(AddRecipeScreenEvent.SetDescription(it)) },
                             textStyle = MaterialTheme.typography.bodyMedium
                         )
                     }
 
-                    Spacer(modifier = Modifier.size(16.dp))
-
-                    BasicTextField(
-                        value = addRecipeState.description,
-                        onValueChange = { onEvent(AddRecipeScreenEvent.SetDescription(it)) },
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    )
                 }
             }
         }

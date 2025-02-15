@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.example.recipeapp.R
 import com.example.recipeapp.events.MainScreenEvent
 import com.example.recipeapp.room.RecipeEntity
@@ -67,14 +68,23 @@ fun RecipeOutline(modifier: Modifier = Modifier, recipeEntity: RecipeEntity, onC
             }
 
 
-            Image(
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape),
-                painter = painterResource(R.drawable.ic_launcher_background),
-                contentScale = ContentScale.Fit,
-                contentDescription = "An image"
-            )
+
+            val imageModifier = Modifier.size(100.dp).clip(CircleShape)
+            if(recipeEntity.image == null){
+                Image(
+                    modifier = imageModifier,
+                    painter = painterResource(R.drawable.empty_plate),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = ""
+                )
+            }else{
+                AsyncImage(
+                    modifier = imageModifier,
+                    model = recipeEntity.image,
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "Image from gallery"
+                )
+            }
 
             Spacer(modifier = Modifier.size(10.dp))
 

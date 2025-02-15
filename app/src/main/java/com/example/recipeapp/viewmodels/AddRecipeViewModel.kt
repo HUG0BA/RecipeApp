@@ -6,16 +6,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.events.AddRecipeScreenEvent
+import com.example.recipeapp.navigation.Navigator
 import com.example.recipeapp.room.RecipeEntity
 import com.example.recipeapp.room.RecipesDao
 import com.example.recipeapp.state.AddRecipeState
+import com.example.recipeapp.utility.SnackbarController
+import com.example.recipeapp.utility.SnackbarEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AddRecipeViewModel(
-    val recipesDao: RecipesDao
+    private val recipesDao: RecipesDao,
+    private val navigator: Navigator
 ): ViewModel() {
     private val _state = MutableStateFlow(AddRecipeState())
     val state = _state.asStateFlow()
@@ -29,16 +33,38 @@ class AddRecipeViewModel(
                 val isFavorite = _state.value.isFavorite
                 val image = _state.value.image
 
-                if(title.isBlank() || description.isBlank()){
+                if(title.isBlank()){
+                    viewModelScope.launch {
+                        SnackbarController.sendEvent(
+                            event = SnackbarEvent(
+                                message = "¡Agrega un titulo a tu receta!"
+                            )
+                        )
+                    }
                     return
                 }
+                if(description.isBlank()){
+                    viewModelScope.launch {
+                        SnackbarController.sendEvent(
+                            event = SnackbarEvent(
+                                message = "¡Agrega una descripcion a tu receta!"
+                            )
+                        )
+                    }
+                    return
+                }
+
                 if(preparationTime <= 0){
+                    viewModelScope.launch {
+                        SnackbarController.sendEvent(
+                            event = SnackbarEvent(
+                                message = "¡Es imposible que cocines tan rapido! Tiempo de preparacion mayor a 0 minutos"
+                            )
+                        )
+                    }
                     return
                 }
 
-                if(image != null){
-
-                }
 
                 val recipe = RecipeEntity(
                     userId = 0,
@@ -51,6 +77,10 @@ class AddRecipeViewModel(
 
                 viewModelScope.launch {
                     recipesDao.insertRecipe(recipe)
+                    _state.update {
+                        AddRecipeState()
+                    }
+                    navigator.navigateUp()
                 }
             }
             is AddRecipeScreenEvent.SetDescription -> {

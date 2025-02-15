@@ -25,51 +25,43 @@ import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier, loginState: LoginState, onEvent: (LoginEvent) -> Unit) {
-    Scaffold(
-        snackbarHost = {
-
-        }
-    ) { innerPaddign ->
-        Surface(
-            modifier = Modifier.padding(innerPaddign).fillMaxSize(),
-        ){
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+    Surface(
+        modifier = Modifier.fillMaxSize()
+    ){
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            TextField(
+                value = loginState.email,
+                onValueChange = { onEvent(LoginEvent.SetEmail(it)) },
+                placeholder = {
+                    Text("Email")
+                }
+            )
+            Spacer(Modifier.size(8.dp))
+            TextField(
+                value = loginState.password,
+                onValueChange = { onEvent(LoginEvent.SetPassword(it))},
+                placeholder = {
+                    Text("Contrasena")
+                }
+            )
+            Spacer(modifier =  Modifier.size(32.dp))
+            Button(
+                onClick = { onEvent(LoginEvent.Submit)}
             ) {
-                TextField(
-                    value = loginState.email,
-                    onValueChange = { onEvent(LoginEvent.SetEmail(it)) },
-                    placeholder = {
-                        Text("Email")
-                    }
-                )
-                Spacer(Modifier.size(8.dp))
-                TextField(
-                    value = loginState.password,
-                    onValueChange = { onEvent(LoginEvent.SetPassword(it))},
-                    placeholder = {
-                        Text("Contrasena")
-                    }
-                )
-                Spacer(modifier =  Modifier.size(32.dp))
-                Button(
-                    onClick = { onEvent(LoginEvent.Submit)}
-                ) {
-                    Text("Iniciar Sesion")
-                }
-                Spacer(modifier = Modifier.size(128.dp))
-                Text(text = "¿Eres nuevo por aqui?")
-                Button(
-                    onClick = { onEvent(LoginEvent.SignUp)}
-                ) {
-                    Text("Crea una cuenta")
-                }
-
+                Text("Iniciar Sesion")
+            }
+            Spacer(modifier = Modifier.size(128.dp))
+            Text(text = "¿Eres nuevo por aqui?")
+            Button(
+                onClick = { onEvent(LoginEvent.SignUp)}
+            ) {
+                Text("Crea una cuenta")
             }
         }
     }
-
 }
 
 @Preview

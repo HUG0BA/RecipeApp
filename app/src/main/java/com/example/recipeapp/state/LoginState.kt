@@ -4,6 +4,5 @@ import androidx.compose.material3.SnackbarHostState
 
 data class LoginState(
     val email: String = "",
-    val password: String = "",
-    val snackbarHostState: SnackbarHostState = SnackbarHostState()
+    val password: String = ""
 )

@@ -16,7 +16,11 @@ import com.example.recipeapp.ui.components.AddRecipeWithImage
 import com.example.recipeapp.ui.theme.AppTheme
 
 @Composable
-fun AddRecipeScreen(modifier: Modifier = Modifier, addRecipeState: AddRecipeState, onEvent: (AddRecipeScreenEvent) -> Unit) {
+fun AddRecipeScreen(
+    modifier: Modifier = Modifier,
+    addRecipeState: AddRecipeState,
+    onEvent: (AddRecipeScreenEvent) -> Unit
+) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(

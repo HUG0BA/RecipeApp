@@ -1,7 +1,6 @@
 package com.example.recipeapp.navigation
 
 import androidx.navigation.NavOptionsBuilder
-import androidx.navigation.navOptions
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 

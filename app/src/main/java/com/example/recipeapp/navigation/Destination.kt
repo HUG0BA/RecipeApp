@@ -4,6 +4,12 @@ import kotlinx.serialization.Serializable
 
 sealed interface Destination {
     @Serializable
+    object LoginScreen: Destination
+
+    @Serializable
+    object SignUpScreen: Destination
+
+    @Serializable
     object MainScreen: Destination
 
     @Serializable
